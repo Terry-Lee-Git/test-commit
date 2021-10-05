@@ -14,7 +14,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-@ComponentScan(basePackages = "com.gmail.nlpraveennl")
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter
 {
     @Autowired
@@ -37,20 +36,22 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter
         	.antMatcher("/**").authorizeRequests()
 		    .antMatchers("/resources/**").permitAll()
 		    .antMatchers("/api/authenticate").permitAll()
-        	.antMatchers("/api/**").hasAnyRole("APIUSER","ADMIN")
-		    .antMatchers("/**").hasRole("ADMIN")
+        	.antMatchers("/api/**").authenticated()
+		    .antMatchers("/**").authenticated()
 	    .and()
-	    	.formLogin()
+	    	.httpBasic()
 	    .and()
     		.addFilterBefore(jwtauthFilter, UsernamePasswordAuthenticationFilter.class);
         
         http.sessionManagement().maximumSessions(1).expiredUrl("/login?expired=true");
+		System.out.println("Test");
+		System.out.println("Test4");
     }
 	
 	@Autowired
 	public void configureInMemoryAuthentication(AuthenticationManagerBuilder auth) throws Exception
 	{
-		auth.inMemoryAuthentication().withUser("admin").password(passwordEncoder.encode("admin@123#")).roles("ADMIN");
-		auth.inMemoryAuthentication().withUser("apiuser").password(passwordEncoder.encode("apiuser@123#")).roles("APIUSER");
+		auth.inMemoryAuthentication().withUser("admin").password(passwordEncoder.encode("admin")).roles("ADMIN");
+		auth.inMemoryAuthentication().withUser("apiuser").password(passwordEncoder.encode("apiuser")).roles("APIUSER");
 	}
 }

@@ -1,6 +1,6 @@
 package com.spring.security.demo.configuration;
 
-import com.gmail.nlpraveennl.util.JwtTokenUtil;
+import com.spring.security.demo.util.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
