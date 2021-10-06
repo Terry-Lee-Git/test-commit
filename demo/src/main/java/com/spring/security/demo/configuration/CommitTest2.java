@@ -13,4 +13,9 @@ public class CommitTest2 {
         System.out.println(10);
 
     }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }
